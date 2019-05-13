@@ -18,28 +18,8 @@ node{
     sh "${mavenHome}/bin/mvn clean package"
   }
 
-  stage('ExecuteSonarQubeReport') {
- 
- sh "${mavenHome}/bin/mvn sonar:sonar"
- }     
-  
-  stage('UploadArtifactIntoNexus') {
- 
- sh "${mavenHome}/bin/mvn deploy"
- } 
- 
  stage('DeployAppIntoTomcat'){
   sh "cp $WORKSPACE/target/*.war /opt/apache-tomcat-9.0.19/webapps/"
   } 
-  
-   stage('SendEmailNotification'){
-  emailext body: '''Build is Over
-
-  Regards,
-  Mithun Technologies,
-  9980923226.
-  ''', subject: 'Build is Over', to: 'devopstrainingblr@gmail.com'
-  } 
-    
     
 }
