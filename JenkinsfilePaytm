@@ -18,8 +18,12 @@ node{
     sh "${mavenHome}/bin/mvn clean package"
   }
 
- stage('DeployAppIntoTomcat'){
-  sh "cp $WORKSPACE/target/*.war /opt/apache-tomcat-9.0.19/webapps/"
-  } 
+  stage('DeployAppIntoTomcat'){
+    
+    sshagent(['Tomcatserver']) {
+     sh 'ssh -o StrictHostKeyChecking=no root@13.233.40.101 uptime'
+            sh 'ssh -v ec2-user@13.233.40.101'
+            sh 'scp $WORKSPACE/target/*.war ec2-user@13.233.40.101:/opt/apache-tomcat-9.0.17/webapps'
+    }
     
 }
