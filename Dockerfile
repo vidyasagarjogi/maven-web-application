@@ -1,2 +1,2 @@
-FROM tomcat:
+FROM tomcat
 COPY ./*.war /usr/local/tomcat/webapps/*.war
